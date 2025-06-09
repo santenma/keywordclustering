@@ -6847,11 +6847,6 @@ def main():
                             st.metric("Duplicates", format_number(duplicate_count))
                         
                         # Configuration section
-                        st.header("⚙️ Clustering Configuration")
-                        
-                        config_col1, config_col2 = st.columns(2)
-                        
-                        with config_col1:
                         with st.sidebar:
                             st.header("⚙️ Clustering Configuration")
 
