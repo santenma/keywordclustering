@@ -18,24 +18,19 @@ import tempfile
 import os
 import re
 
+# Configure logging before using it
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger('excel_export')
+
 try:
     import xlsxwriter
     XLSXWRITER_AVAILABLE = True
 except ImportError:
     XLSXWRITER_AVAILABLE = False
     logger.warning("xlsxwriter not available - Excel export will be limited")
-
-# Update the generate_excel method in ExcelReport class
-def generate_excel(self):
-    """Generate an Excel report with multiple worksheets."""
-    if not XLSXWRITER_AVAILABLE:
-        raise ImportError("xlsxwriter is required for Excel export. Please install it with: pip install xlsxwriter")
-    
-    # Rest of the method remains the same...
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger('excel_export')
 
 class ExcelReport:
     """
