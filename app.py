@@ -1,8 +1,3 @@
-"""
-Advanced Semantic Keyword Clustering Application
-Block 1: Imports, Configuration, and Constants
-"""
-
 import os
 import time
 import json
@@ -260,9 +255,6 @@ OPENAI_PRICING = {
     "gpt-4o": {"input": 2.50, "output": 10.00},
     "gpt-4-turbo": {"input": 10.00, "output": 30.00}
 }
-"""
-Block 2: Utility Functions and Resource Management
-"""
 
 def initialize_session_state():
     """Initialize session state variables"""
@@ -618,9 +610,6 @@ def calculate_entropy(values):
         
     except Exception:
         return 0
-"""
-Block 3: Text Preprocessing Functions
-"""
 
 def preprocess_keywords_basic(keywords_list, language="English"):
     """Basic keyword preprocessing using NLTK"""
@@ -996,9 +985,6 @@ def analyze_search_intent_bulk(keywords_list, batch_size=1000):
     except Exception as e:
         log_error(e, "bulk_intent_analysis")
         return ["Unknown"] * len(keywords_list), {"Unknown": 100.0}
-"""
-Block 4: Embedding Generation Functions
-"""
 
 @st.cache_data(ttl=3600, max_entries=5)
 def generate_openai_embeddings(keywords_list, client, model="text-embedding-3-small", batch_size=100):
@@ -1395,9 +1381,6 @@ def reduce_embedding_dimensions(embeddings, target_dim=100, variance_threshold=0
         log_error(e, "dimension_reduction")
         st.warning(f"⚠️ Dimension reduction failed: {str(e)}. Using original embeddings.")
         return embeddings
-"""
-Block 5: Clustering Algorithms
-"""
 
 def determine_optimal_clusters(embeddings, max_clusters=20, min_clusters=2):
     """Determine optimal number of clusters using elbow method and silhouette analysis"""
@@ -1863,9 +1846,6 @@ def refine_clusters(embeddings, initial_labels, min_cluster_size=2):
         })
         st.warning(f"⚠️ Cluster refinement failed: {str(e)}. Using original clusters.")
         return initial_labels
-"""
-Block 6: Cluster Analysis Functions
-"""
 
 def find_representative_keywords(embeddings, keywords, cluster_labels, top_k=5):
     """Find representative keywords for each cluster with enhanced error handling"""
@@ -2281,9 +2261,6 @@ def create_fallback_cluster_names(representatives):
             }
     
     return cluster_names
-"""
-Block 7: AI-Powered Analysis Functions
-"""
 
 def analyze_cluster_quality_ai(representatives, coherence_scores, client=None, model="gpt-4o-mini"):
     """AI-powered cluster quality analysis"""
@@ -2752,9 +2729,6 @@ def optimize_batch_processing(total_items, available_memory_mb=1000, complexity_
     except Exception as e:
         log_error(e, "batch_optimization")
         return min(5, total_items)  # Safe fallback
-"""
-Block 8: Data Processing and DataFrame Management
-"""
 
 def load_csv_file(uploaded_file, csv_format="auto"):
     """Load and validate CSV file with enhanced error handling"""
@@ -3204,9 +3178,6 @@ def add_search_volume_data(df, search_volume_col='search_volume'):
         log_error(e, "search_volume_analysis")
         st.warning(f"⚠️ Search volume analysis failed: {str(e)}")
         return df
-"""
-Block 9: Metrics and Summary Functions
-"""
 
 def calculate_cluster_metrics(df):
     """Calculate comprehensive cluster metrics with enhanced analysis"""
@@ -3682,9 +3653,6 @@ def create_clustering_summary_metrics(df):
     except Exception as e:
         log_error(e, "summary_metrics")
         return {'error': f"Failed to calculate metrics: {str(e)}"}
-"""
-Block 10: Visualization Functions
-"""
 
 def create_cluster_size_chart(df):
     """Create cluster size distribution chart with enhanced styling"""
@@ -4323,9 +4291,6 @@ def create_representative_keywords_chart(df, top_clusters=10):
         log_error(e, "representative_keywords_chart")
         st.error(f"Failed to create representative keywords chart: {str(e)}")
         return None
-"""
-Block 11: Dashboard and Analysis Display Functions
-"""
 
 def display_clustering_dashboard(df):
     """Display comprehensive clustering dashboard with enhanced metrics"""
@@ -5049,7 +5014,7 @@ def create_cluster_explorer(df):
             with export_col2:
                 # Representatives only export
                 if not rep_keywords.empty:
-rep_csv = rep_keywords.to_csv(index=False)
+                    rep_csv = rep_keywords.to_csv(index=False)
                     st.download_button(
                         label="⭐ Download Representatives Only",
                         data=rep_csv,
@@ -5361,9 +5326,6 @@ def show_data_analysis_tab(df, config):
     except Exception as e:
         log_error(e, "data_analysis_tab")
         st.error(f"Data analysis error: {str(e)}")
-"""
-Block 12: Export and Report Functions
-"""
 
 def show_export_options(df):
     """Show comprehensive export options with download buttons"""
@@ -5962,9 +5924,6 @@ def create_json_export(df):
     except Exception as e:
         log_error(e, "json_export_creation")
         return {"error": f"Failed to create JSON export: {str(e)}"}
-"""
-Block 13: Report Generation and Settings Management
-"""
 
 def generate_comprehensive_report(df, config):
     """Generate comprehensive analysis report"""
@@ -6672,44 +6631,44 @@ def show_settings_actions_tab(df, config):
                     if info['available']:
                         st.success(f"✅ {lib}: Available")
                     else:
-st.warning(f"⚠️ {lib}: {info['message']}")
-           
-           with sys_col2:
-               st.markdown("#### Memory Usage")
-               if PSUTIL_AVAILABLE:
-                   try:
-                       import psutil
-                       process = psutil.Process()
-                       memory_info = process.memory_info()
-                       memory_mb = memory_info.rss / 1024 / 1024
-                       
-                       st.metric("Current Memory", f"{memory_mb:.1f} MB")
-                       st.metric("Peak Memory", f"{st.session_state.memory_monitor.get('peak_memory', 0):.1f} MB")
-                       
-                       # System memory
-                       vm = psutil.virtual_memory()
-                       st.metric("System Memory", f"{vm.percent:.1f}% used")
-                   except Exception as e:
-                       st.info("Memory information unavailable")
-               else:
-                   st.info("Install psutil for memory monitoring")
+                        st.warning(f"⚠️ {lib}: {info['message']}")
+
+            with sys_col2:
+                st.markdown("#### Memory Usage")
+                if PSUTIL_AVAILABLE:
+                    try:
+                        import psutil
+                        process = psutil.Process()
+                        memory_info = process.memory_info()
+                        memory_mb = memory_info.rss / 1024 / 1024
+
+                        st.metric("Current Memory", f"{memory_mb:.1f} MB")
+                        st.metric("Peak Memory", f"{st.session_state.memory_monitor.get('peak_memory', 0):.1f} MB")
+
+                        # System memory
+                        vm = psutil.virtual_memory()
+                        st.metric("System Memory", f"{vm.percent:.1f}% used")
+                    except Exception as e:
+                        st.info("Memory information unavailable")
+                else:
+                    st.info("Install psutil for memory monitoring")
        
-       # Debug information
-       with st.expander("🐛 Debug Information", expanded=False):
-           debug_col1, debug_col2 = st.columns(2)
-           
-           with debug_col1:
-               st.markdown("#### Data Information")
-               debug_info = {
-                   "DataFrame Shape": df.shape if df is not None else "N/A",
-                   "DataFrame Columns": list(df.columns) if df is not None else [],
-                   "Memory Usage (MB)": round(df.memory_usage(deep=True).sum() / 1024 / 1024, 2) if df is not None else 0,
-                   "Null Values": df.isnull().sum().to_dict() if df is not None else {},
-                   "Data Types": df.dtypes.astype(str).to_dict() if df is not None else {}
-               }
-               st.json(debug_info)
-           
-           with debug_col2:
+        # Debug information
+        with st.expander("🐛 Debug Information", expanded=False):
+            debug_col1, debug_col2 = st.columns(2)
+
+            with debug_col1:
+                st.markdown("#### Data Information")
+                debug_info = {
+                    "DataFrame Shape": df.shape if df is not None else "N/A",
+                    "DataFrame Columns": list(df.columns) if df is not None else [],
+                    "Memory Usage (MB)": round(df.memory_usage(deep=True).sum() / 1024 / 1024, 2) if df is not None else 0,
+                    "Null Values": df.isnull().sum().to_dict() if df is not None else {},
+                    "Data Types": df.dtypes.astype(str).to_dict() if df is not None else {}
+                }
+                st.json(debug_info)
+
+            with debug_col2:
                st.markdown("#### Processing Information")
                processing_info = {
                    "Config": {k: str(v) for k, v in config.items() if k != 'openai_api_key'},
@@ -6720,38 +6679,37 @@ st.warning(f"⚠️ {lib}: {info['message']}")
                }
                st.json(processing_info)
        
-       # Export session configuration
-       st.subheader("📤 Export Configuration")
-       
-       if st.button("📋 Export Session Configuration", use_container_width=True):
-           try:
-               config_export = {
-                   "timestamp": datetime.now().isoformat(),
-                   "configuration": {k: v for k, v in config.items() if k != 'openai_api_key'},
-                   "settings": st.session_state.get('app_settings', {}),
-                   "data_summary": {
-                       "total_keywords": len(df) if df is not None else 0,
-                       "total_clusters": df['cluster_id'].nunique() if df is not None else 0,
-                       "columns": list(df.columns) if df is not None else []
-                   }
-               }
-               
-               config_json = json.dumps(config_export, indent=2)
-               timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-               
-               st.download_button(
-                   label="💾 Download Configuration",
-                   data=config_json,
-                   file_name=f"clustering_config_{timestamp}.json",
-                   mime="application/json",
-                   help="Save configuration for future use"
-               )
-           except Exception as e:
-               st.error(f"Failed to export configuration: {str(e)}")
-       
-   except Exception as e:
-       log_error(e, "settings_actions_tab")
-       st.error(f"Settings tab error: {str(e)}")
+        # Export session configuration
+        st.subheader("📤 Export Configuration")
+
+        if st.button("📋 Export Session Configuration", use_container_width=True):
+            try:
+                config_export = {
+                    "timestamp": datetime.now().isoformat(),
+                    "configuration": {k: v for k, v in config.items() if k != 'openai_api_key'},
+                    "settings": st.session_state.get('app_settings', {}),
+                    "data_summary": {
+                        "total_keywords": len(df) if df is not None else 0,
+                        "total_clusters": df['cluster_id'].nunique() if df is not None else 0,
+                        "columns": list(df.columns) if df is not None else []
+                    }
+                }
+
+                config_json = json.dumps(config_export, indent=2)
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+                st.download_button(
+                    label="💾 Download Configuration",
+                    data=config_json,
+                    file_name=f"clustering_config_{timestamp}.json",
+                    mime="application/json",
+                    help="Save configuration for future use",
+                )
+            except Exception as e:
+                st.error(f"Failed to export configuration: {str(e)}")
+    except Exception as e:
+        log_error(e, "settings_actions_tab")
+        st.error(f"Settings tab error: {str(e)}")
 
 def refine_small_clusters(df, min_size=3):
    """Refine small clusters by merging with similar ones"""
@@ -7152,9 +7110,6 @@ def show_system_requirements():
    except Exception as e:
        log_error(e, "show_system_requirements")
        st.error(f"Error displaying system requirements: {str(e)}")
-"""
-Block 14: Main Application Function
-"""
 
 def main():
     """Main application function"""
@@ -7605,14 +7560,12 @@ def main():
                                 
                                 # Process data
                                 process_keywords(df_input, config)
-            
-            # Help section
-            else:
-                st.info("💡 No file uploaded yet. Upload a CSV file with keywords to get started!")
-                
-                # Show demo section
-                st.markdown("---")
-                st.subheader("🎯 What This Tool Does")
+                            # Help section
+                            else:
+                                st.info("💡 No file uploaded yet. Upload a CSV file with keywords to get started!")
+                                # Show demo section
+                                st.markdown("---")
+                                st.subheader("🎯 What This Tool Does")
                 
                 demo_col1, demo_col2, demo_col3 = st.columns(3)
                 
@@ -7689,9 +7642,6 @@ def main():
 # Run the application
 if __name__ == "__main__":
     main()
-"""
-Block 15: Processing Pipeline Functions
-"""
 
 def process_keywords(df_input, config):
     """Main processing pipeline for keyword clustering"""
