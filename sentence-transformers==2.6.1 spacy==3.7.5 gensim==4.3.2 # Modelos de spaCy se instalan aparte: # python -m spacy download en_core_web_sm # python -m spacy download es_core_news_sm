@@ -1,0 +1,6 @@
+sentence-transformers==2.6.1
+spacy==3.7.5
+gensim==4.3.2
+# Modelos de spaCy se instalan aparte:
+# python -m spacy download en_core_web_sm
+# python -m spacy download es_core_news_sm
